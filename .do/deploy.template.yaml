@@ -1,0 +1,26 @@
+spec:
+  name: ariav3
+  region: nyc
+  services:
+    - name: ariav3-agent
+      git:
+        branch: main
+        repo_clone_url: ${!REPO_CLONE_URL}
+      dockerfile_path: Dockerfile
+      instance_count: 1
+      instance_size_slug: apps-s-1vcpu-0.5gb
+      envs:
+        - key: LIVEKIT_URL
+          value: "wss://kimi-w2zy50cj.livekit.cloud"
+        - key: LIVEKIT_API_KEY
+          type: SECRET
+        - key: LIVEKIT_API_SECRET
+          type: SECRET
+        - key: GMAIL_USER
+          type: SECRET
+        - key: GMAIL_APP_PASSWORD
+          type: SECRET
+        - key: N8N_MCP_SERVER_URL
+          type: SECRET
+        - key: LIVEKIT_ROOM
+          value: "aria-room"

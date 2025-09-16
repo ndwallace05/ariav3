@@ -2,6 +2,9 @@
 
 ARIA is a sophisticated AI personal assistant built using LiveKit Agents, featuring a sassy personality and powerful capabilities to help manage your daily tasks and interactions.
 
+## Deploy to DigitalOcean
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/ndwallace05/ariav3.git&path=.do)
+
 ## 🌟 Features
 
 - **Voice & Chat Interaction**: Fully conversational interface supporting both voice and text
