@@ -6,11 +6,9 @@ import logging
 # Import from the installed mcp package
 from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
 import mcp.types
-# FIX 1: Import SessionMessage from its correct public location
-from mcp.types import CallToolResult, JSONRPCMessage, Tool as MCPTool
+from mcp.types import CallToolResult, JSONRPCMessage, SessionMessage, Tool as MCPTool
 from mcp.client.sse import sse_client
 from mcp.client.session import ClientSession
-from mcp.shared.message import SessionMessage
 
 # Base class for MCP servers
 class MCPServer:
@@ -190,7 +188,6 @@ class MCPServerStdio(MCPServer):
 
     def __init__(self, params: MCPServerStdioParams, cache_tools_list: bool = False, name: Optional[str] = None):
         self.params = params
-        # FIX 2: Correct the typo
         self.cache_tools_list = cache_tools_list
         self._tools_cache: Optional[List[MCPTool]] = None
         self._name = name or f"Stdio Server: {self.params.get('command', 'unknown')}"
