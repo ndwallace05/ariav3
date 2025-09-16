@@ -1,132 +1,111 @@
-# ARIA - Artificial Resourceful Intelligent Assistant 🤖
+# Agent Starter for React
 
-ARIA is a sophisticated AI personal assistant built using LiveKit Agents, featuring a sassy personality and powerful capabilities to help manage your daily tasks and interactions.
+This is a starter template for [LiveKit Agents](https://docs.livekit.io/agents) that provides a simple voice interface using the [LiveKit JavaScript SDK](https://github.com/livekit/client-sdk-js). It supports [voice](https://docs.livekit.io/agents/start/voice-ai), [transcriptions](https://docs.livekit.io/agents/build/text/), and [virtual avatars](https://docs.livekit.io/agents/integrations/avatar).
 
-## Deploy to DigitalOcean
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/ndwallace05/ariav3.git&path=.do)
+Also available for:
+[Android](https://github.com/livekit-examples/agent-starter-android) • [Flutter](https://github.com/livekit-examples/agent-starter-flutter) • [Swift](https://github.com/livekit-examples/agent-starter-swift) • [React Native](https://github.com/livekit-examples/agent-starter-react-native)
 
-## 🌟 Features
+<picture>
+  <source srcset="./.github/assets/readme-hero-dark.webp" media="(prefers-color-scheme: dark)">
+  <source srcset="./.github/assets/readme-hero-light.webp" media="(prefers-color-scheme: light)">
+  <img src="./.github/assets/readme-hero-light.webp" alt="App screenshot">
+</picture>
 
-- **Voice & Chat Interaction**: Fully conversational interface supporting both voice and text
-- **Personalized Memory**: Remembers past conversations and context for more natural interactions
-- **Smart Tools Integration**:
-  - 🌤️ Weather updates for any city
-  - 🔍 Web search capabilities using DuckDuckGo
-  - 📧 Email sending functionality with Gmail
-  - 🛠️ Extensible Model-Context-Protocol (MCP) integration for additional tools
+### Features:
 
-## 🎭 Personality
+- Real-time voice interaction with LiveKit Agents
+- Camera video streaming support
+- Screen sharing capabilities
+- Audio visualization and level monitoring
+- Virtual avatar integration
+- Light/dark theme switching with system preference detection
+- Customizable branding, colors, and UI text via configuration
 
-ARIA is designed with a distinctive personality:
-- Whip-smart and sassy
-- Fluent in sarcasm and pop culture references
-- Adapts tone based on context (including "Emotional Support Gay Best Friend Mode")
-- Uses emojis strategically for emphasis
+This template is built with Next.js and is free for you to use or modify as you see fit.
 
-## 🔧 Technical Stack
+### Project structure
 
-- **Core Framework**: LiveKit Agents
-- **Language Model**: Google Beta Realtime Model
-- **Memory System**: mem0ai
-- **Additional Integrations**:
-  - Noise cancellation for clear voice interaction
-  - DuckDuckGo search integration
-  - Gmail SMTP for email functionality
-  - Model Context Protocol (MCP) for extensible tool integration
+```
+agent-starter-react/
+├── app/
+│   ├── (app)/
+│   ├── api/
+│   ├── components/
+│   ├── fonts/
+│   ├── globals.css
+│   └── layout.tsx
+├── components/
+│   ├── livekit/
+│   ├── ui/
+│   ├── app.tsx
+│   ├── session-view.tsx
+│   └── welcome.tsx
+├── hooks/
+├── lib/
+├── public/
+└── package.json
+```
 
-## 📋 Prerequisites
+## Getting started
 
-- Python 3.x
-- Gmail account (for email functionality)
-- Environment variables configured
+> [!TIP]
+> If you'd like to try this application without modification, you can deploy an instance in just a few clicks with [LiveKit Cloud Sandbox](https://cloud.livekit.io/projects/p_/sandbox/templates/agent-starter-react).
 
-## ⚙️ Setup
+[![Open on LiveKit](https://img.shields.io/badge/Open%20on%20LiveKit%20Cloud-002CF2?style=for-the-badge&logo=external-link)](https://cloud.livekit.io/projects/p_/sandbox/templates/agent-starter-react)
 
-1. Clone the repository:
-\`\`\`bash
-git clone [repository-url]
-cd ariav3
-\`\`\`
+Run the following command to automatically clone this template.
 
-2. Install dependencies:
-\`\`\`bash
-pip install -r requirements.txt
-\`\`\`
+```bash
+lk app create --template agent-starter-react
+```
 
-3. Set up environment variables (.env file):
-\`\`\`env
-GMAIL_USER=your-email@gmail.com
-GMAIL_APP_PASSWORD=your-app-password
-N8N_MCP_SERVER_URL=your-mcp-server-url
-\`\`\`
+Then run the app with:
 
-## 🚀 Usage
+```bash
+pnpm install
+pnpm dev
+```
 
-Start ARIA by running:
-\`\`\`bash
-python agent.py connect --room [room-name]
-\`\`\`
+And open http://localhost:3000 in your browser.
 
-## 🛠️ Available Tools
+You'll also need an agent to speak with. Try our starter agent for [Python](https://github.com/livekit-examples/agent-starter-python), [Node.js](https://github.com/livekit-examples/agent-starter-node), or [create your own from scratch](https://docs.livekit.io/agents/start/voice-ai/).
 
-### Weather Information
-\`\`\`python
-get_weather(city: str) -> str
-\`\`\`
-Retrieves current weather information for any specified city.
+## Configuration
 
-### Web Search
-\`\`\`python
-search_web(query: str) -> str
-\`\`\`
-Performs web searches using DuckDuckGo's search engine.
+This starter is designed to be flexible so you can adapt it to your specific agent use case. You can easily configure it to work with different types of inputs and outputs:
 
-### Email Sending
-\`\`\`python
-send_email(to_email: str, subject: str, message: str, cc_email: Optional[str] = None) -> str
-\`\`\`
-Sends emails through Gmail with optional CC functionality.
+#### Example: App configuration (`app-config.ts`)
 
-## 🧠 Memory System
+```ts
+export const APP_CONFIG_DEFAULTS = {
+  companyName: 'LiveKit',
+  pageTitle: 'LiveKit Voice Agent',
+  pageDescription: 'A voice agent built with LiveKit',
+  supportsChatInput: true,
+  supportsVideoInput: true,
+  supportsScreenShare: true,
+  logo: '/lk-logo.svg',
+  accent: '#002cf2',
+  logoDark: '/lk-logo-dark.svg',
+  accentDark: '#1fd5f9',
+  startButtonText: 'Start call',
+};
+```
 
-ARIA uses a sophisticated memory system to store and recall conversation context. Memories are stored in the format:
-\`\`\`json
-{
-    "memory": "conversation content",
-    "updated_at": "timestamp"
-}
-\`\`\`
+You can update these values in [`app-config.ts`](./app-config.ts) to customize branding, features, and UI text for your deployment.
 
-## 🔐 Security Notes
+#### Environment Variables
 
-- Uses app-specific passwords for Gmail integration
-- Implements secure SMTP with TLS encryption
-- Keeps sensitive information in environment variables
+You'll also need to configure your LiveKit credentials in `.env.local` (copy `.env.example` if you don't have one):
 
-## 📝 Project Structure
+```env
+LIVEKIT_API_KEY=your_livekit_api_key
+LIVEKIT_API_SECRET=your_livekit_api_secret
+LIVEKIT_URL=https://your-livekit-server-url
+```
 
-\`\`\`
-├── agent.py           # Main agent implementation
-├── prompts.py         # Agent personality and session instructions
-├── tools.py           # Tool implementations (weather, email, search)
-├── requirements.txt   # Project dependencies
-└── mcp_client/       # MCP integration components
-    ├── __init__.py
-    ├── agent_tools.py
-    ├── server.py
-    └── util.py
-\`\`\`
+These are required for the voice agent functionality to work with your LiveKit project.
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## ⚠️ Important Notes
-
-- Ensure all environment variables are properly configured before running
-- Gmail integration requires an app-specific password
-- Voice functionality requires proper audio setup
-
-## 📄 License
-
-[Add your license information here]
+This template is open source and we welcome contributions! Please open a PR or issue through GitHub, and don't forget to join us in the [LiveKit Community Slack](https://livekit.io/join-slack)!
