@@ -6,7 +6,7 @@ import logging
 # Import from the installed mcp package
 from anyio.streams.memory import MemoryObjectReceiveStream, MemoryObjectSendStream
 import mcp.types
-from mcp.types import CallToolResult, JSONRPCMessage, SessionMessage, Tool as MCPTool
+from mcp.types import CallToolResult, JSONRPCMessage, Tool as MCPTool
 from mcp.client.sse import sse_client
 from mcp.client.session import ClientSession
 
@@ -60,8 +60,8 @@ class _MCPServerWithClientSession(MCPServer):
         self,
     ) -> AbstractAsyncContextManager[
         Tuple[
-            MemoryObjectReceiveStream[SessionMessage | Exception],
-            MemoryObjectSendStream[SessionMessage],
+            MemoryObjectReceiveStream[JSONRPCMessage | Exception],
+            MemoryObjectSendStream[JSONRPCMessage],
         ]
     ]:
         """Create the streams for the server."""
@@ -165,8 +165,8 @@ class MCPServerSse(_MCPServerWithClientSession):
         self,
     ) -> AbstractAsyncContextManager[
         Tuple[
-            MemoryObjectReceiveStream[SessionMessage | Exception],
-            MemoryObjectSendStream[SessionMessage],
+            MemoryObjectReceiveStream[JSONRPCMessage | Exception],
+            MemoryObjectSendStream[JSONRPCMessage],
         ]
     ]:
         """Create the streams for the server."""
@@ -218,4 +218,3 @@ class MCPServerStdio(MCPServer):
     async def cleanup(self):
         self.connected = False
         self.logger.info(f"Cleaned up MCP Stdio server: {self.name}")
-
