@@ -9,6 +9,9 @@ from livekit.plugins import (
 from livekit.plugins import google
 from prompts import AGENT_INSTRUCTION, SESSION_INSTRUCTION
 from tools import get_weather, search_web, send_email
+from file_system_tools import create_folder, create_file, edit_file, list_files, read_file
+from calculator_tool import calculate
+from web_tools import open_website
 from mem0 import AsyncMemoryClient
 from mcp_client import MCPServerSse
 from mcp_client.agent_tools import MCPToolsIntegration
@@ -28,7 +31,14 @@ class Assistant(Agent):
             tools=[
                 get_weather,
                 search_web,
-                send_email
+                send_email,
+                create_folder,
+                create_file,
+                edit_file,
+                calculate,
+                list_files,
+                read_file,
+                open_website,
             ],
             chat_ctx=chat_ctx
         )
