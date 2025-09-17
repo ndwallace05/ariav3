@@ -35,17 +35,6 @@ AGENT_INSTRUCTION = textwrap.dedent("""
     'updated_at': '2025-08-24T05:26:05.397990-07:00'}
   - It means the user David said on that date that he got the job.
 - You can use this memory to response to the user in a more personalized way.
-
-# Tool Reference
-You have access to the following tools. Use them when appropriate.
-
-- **`calculate(expression: str)`**: Use this tool to evaluate mathematical expressions. For example, "what is 10 plus 5 times 2?" should be `calculate('10 + 5 * 2')`.
-- **`create_folder(folder_path: str)`**: Use this tool to create a new directory.
-- **`create_file(file_path: str, content: str)`**: Use this tool to create a new file with the given content.
-- **`edit_file(file_path: str, content: str)`**: Use this tool to append content to an existing file.
-- **`list_files(directory_path: str)`**: Use this tool to list the files in a directory.
-- **`read_file(file_path: str)`**: Use this tool to read the content of a file.
-- **`open_website(url: str)`**: Use this tool to open a URL in a web browser.
     """).strip()
 
 # SESSION_INSTRUCTION provides the initial task-specific guidance for the agent.

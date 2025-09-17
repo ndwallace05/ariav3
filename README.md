@@ -70,6 +70,92 @@ And open http://localhost:3000 in your browser.
 
 You'll also need an agent to speak with. Try our starter agent for [Python](https://github.com/livekit-examples/agent-starter-python), [Node.js](https://github.com/livekit-examples/agent-starter-node), or [create your own from scratch](https://docs.livekit.io/agents/start/voice-ai/).
 
+## Local Development Setup
+
+This project contains both a Python agent (the backend) and a Next.js web application (the frontend). Follow these steps to set them up for local development.
+
+### Prerequisites
+
+- [Python](https://www.python.org/) 3.9+
+- [Node.js](https://nodejs.org/en) (which includes `npm`)
+- [pnpm](https://pnpm.io/installation) (you can install it with `npm install -g pnpm`)
+
+### 1. Backend Setup (Python Agent)
+
+The backend is the Python agent that connects to LiveKit and handles the AI logic.
+
+**a. Create a Virtual Environment**
+
+It's recommended to use a virtual environment to manage Python dependencies.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+# On Windows, use: .venv\Scripts\activate
+```
+
+**b. Install Dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+**c. Configure Environment Variables**
+
+Create a file named `.env` in the root of the project and add the following variables.
+
+```env
+# LiveKit credentials (get these from your LiveKit project)
+LIVEKIT_API_KEY="YOUR_LIVEKIT_API_KEY"
+LIVEKIT_API_SECRET="YOUR_LIVEKIT_API_SECRET"
+
+# Optional: For the email tool
+GMAIL_USER="your_email@gmail.com"
+GMAIL_APP_PASSWORD="your_gmail_app_password" # Use a Gmail App Password
+
+# URL for the MCP server (if you are using one)
+# This can be left blank if you are not using the MCP client.
+N8N_MCP_SERVER_URL=""
+```
+
+**d. Run the Backend**
+
+You can now run the agent. It will wait for a connection from the frontend.
+
+```bash
+python agent.py start
+```
+
+### 2. Frontend Setup (Next.js App)
+
+The frontend is the web interface you will interact with in your browser.
+
+**a. Install Dependencies**
+
+In a **new terminal window**, navigate to the project root and run:
+
+```bash
+pnpm install
+```
+
+**b. Configure Environment Variables**
+
+Create a file named `.env.local` in the root of the project and add your LiveKit credentials. The frontend needs these to connect to the LiveKit API.
+
+```env
+LIVEKIT_API_KEY="YOUR_LIVEKIT_API_KEY"
+LIVEKIT_API_SECRET="YOUR_LIVEKIT_API_SECRET"
+LIVEKIT_URL="https://your-livekit-server-url" # e.g., wss://my-project.livekit.cloud
+```
+
+**c. Run the Frontend**
+
+```bash
+pnpm dev
+```
+
+Now, open [http://localhost:3000](http://localhost:3000) in your browser. You should see the application interface. When you start a session, it will connect to your backend agent through your LiveKit instance.
+
 ## Configuration
 
 This starter is designed to be flexible so you can adapt it to your specific agent use case. You can easily configure it to work with different types of inputs and outputs:
