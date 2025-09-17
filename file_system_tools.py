@@ -1,5 +1,7 @@
 import os
+from livekit.agents import function_tool
 
+@function_tool()
 def create_folder(folder_path: str) -> str:
     """
     Creates a new folder at the specified path.
@@ -22,6 +24,7 @@ def create_folder(folder_path: str) -> str:
     except Exception as e:
         return f"Error: Failed to create folder '{folder_path}'. Reason: {e}"
 
+@function_tool()
 def create_file(file_path: str, content: str) -> str:
     """
     Creates a new file with specified content.
@@ -46,6 +49,7 @@ def create_file(file_path: str, content: str) -> str:
     except Exception as e:
         return f"Error: Failed to create file '{file_path}'. Reason: {e}"
 
+@function_tool()
 def edit_file(file_path: str, content: str) -> str:
     """
     Appends content to an existing file.
@@ -70,6 +74,7 @@ def edit_file(file_path: str, content: str) -> str:
     except Exception as e:
         return f"Error: Failed to edit file '{file_path}'. Reason: {e}"
 
+@function_tool()
 def list_files(directory_path: str = ".") -> str:
     """
     Lists all files and directories within a specified folder.
@@ -90,6 +95,7 @@ def list_files(directory_path: str = ".") -> str:
     except Exception as e:
         return f"Error listing files: {e}"
 
+@function_tool()
 def read_file(file_path: str) -> str:
     """
     Reads the entire content of a specified file.

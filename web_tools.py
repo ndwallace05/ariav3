@@ -1,6 +1,8 @@
 import webbrowser
 import logging
+from livekit.agents import function_tool
 
+@function_tool()
 def open_website(url: str) -> str:
     """
     Opens a given URL in the default web browser.

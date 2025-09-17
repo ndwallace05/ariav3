@@ -1,5 +1,6 @@
 import ast
 import operator as op
+from livekit.agents import function_tool
 
 # Supported operators
 operators = {
@@ -31,6 +32,7 @@ def eval_(node):
     else:
         raise TypeError(node)
 
+@function_tool()
 def calculate(expression: str) -> str:
     """
     Safely evaluates a mathematical expression using an AST parser
