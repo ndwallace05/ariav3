@@ -69,3 +69,42 @@ def edit_file(file_path: str, content: str) -> str:
         return f"Success: Content appended to file '{file_path}'."
     except Exception as e:
         return f"Error: Failed to edit file '{file_path}'. Reason: {e}"
+
+def list_files(directory_path: str = ".") -> str:
+    """
+    Lists all files and directories within a specified folder.
+
+    Args:
+        directory_path: The path of the directory to inspect. Defaults to the current directory.
+
+    Returns:
+        A string containing the list of files and directories, or an error message.
+    """
+    try:
+        if not os.path.isdir(directory_path):
+            return f"Error: The path '{directory_path}' is not a valid directory."
+        files = os.listdir(directory_path)
+        if not files:
+            return f"The directory '{directory_path}' is empty."
+        return f"Files in '{directory_path}':\n" + "\n".join(files)
+    except Exception as e:
+        return f"Error listing files: {e}"
+
+def read_file(file_path: str) -> str:
+    """
+    Reads the entire content of a specified file.
+
+    Args:
+        file_path: The path of the file to read.
+
+    Returns:
+        The content of the file as a string, or an error message.
+    """
+    try:
+        if not os.path.isfile(file_path):
+            return f"Error: The path '{file_path}' is not a valid file."
+        with open(file_path, 'r') as f:
+            content = f.read()
+        return f"Content of '{file_path}':\n{content}"
+    except Exception as e:
+        return f"Error reading file: {e}"

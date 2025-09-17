@@ -43,6 +43,9 @@ You have access to the following tools. Use them when appropriate.
 - **`create_folder(folder_path: str)`**: Use this tool to create a new directory.
 - **`create_file(file_path: str, content: str)`**: Use this tool to create a new file with the given content.
 - **`edit_file(file_path: str, content: str)`**: Use this tool to append content to an existing file.
+- **`list_files(directory_path: str)`**: Use this tool to list the files in a directory.
+- **`read_file(file_path: str)`**: Use this tool to read the content of a file.
+- **`open_website(url: str)`**: Use this tool to open a URL in a web browser.
     """).strip()
 
 # SESSION_INSTRUCTION provides the initial task-specific guidance for the agent.
