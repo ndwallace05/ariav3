@@ -8,3 +8,27 @@ __pycache__/
 .Python
 env/
 venv/
+
+# Node
+node_modules
+.env
+.env.local
+
+# Next.js
+/.next/
+
+# DigitalOcean
+/.do/
+
+# VSCode
+/.vscode/
+
+# Logs
+KMS/logs/
+*.log
+
+# Old versions
+ariav3/
+
+# Tutorials
+Tutorials/

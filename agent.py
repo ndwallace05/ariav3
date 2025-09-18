@@ -13,33 +13,30 @@ from file_system_tools import create_folder, create_file, edit_file, list_files,
 from calculator_tool import calculate
 from web_tools import open_website
 from mem0 import AsyncMemoryClient
-from mcp_client import MCPServerSse
+
+# 1.  ---- LEAVE IMPORTS AT TOP (harmless) ----
+from mcp_client import MCPServerSse                # keep, just in case
 from mcp_client.agent_tools import MCPToolsIntegration
+
+
+
+
+
 import os
 import json
 import logging
+import traceback
 load_dotenv()
 
 
 class Assistant(Agent):
-    def __init__(self, chat_ctx=None) -> None:
+    def __init__(self, tools, chat_ctx=None) -> None:
         super().__init__(
             instructions=AGENT_INSTRUCTION,
             llm=google.beta.realtime.RealtimeModel(
             voice="Aoede",
             ),
-            tools=[
-                get_weather,
-                search_web,
-                send_email,
-                create_folder,
-                create_file,
-                edit_file,
-                calculate,
-                list_files,
-                read_file,
-                open_website,
-            ],
+            tools=tools,
             chat_ctx=chat_ctx
         )
 
@@ -119,10 +116,26 @@ async def entrypoint(ctx: agents.JobContext):
         name="SSE MCP Server"
     )
 
-    agent = await MCPToolsIntegration.create_agent_with_tools(
-        agent_class=Assistant, agent_kwargs={"chat_ctx": initial_ctx},
+    local_tools = [
+        get_weather,
+        search_web,
+        send_email,
+        create_folder,
+        create_file,
+        edit_file,
+        calculate,
+        list_files,
+        read_file,
+        open_website,
+    ]
+
+    mcp_tools = await MCPToolsIntegration.prepare_dynamic_tools(
         mcp_servers=[mcp_server]
     )
+
+    all_tools = local_tools + mcp_tools
+
+    agent = Assistant(tools=all_tools, chat_ctx=initial_ctx)
 
     await session.start(
         room=ctx.room,
@@ -145,4 +158,29 @@ async def entrypoint(ctx: agents.JobContext):
     ctx.add_shutdown_callback(lambda: shutdown_hook(session._agent.chat_ctx if session._agent else None, mem0, memory_str))
 
 if __name__ == "__main__":
-    agents.cli.run_app(agents.WorkerOptions(entrypoint_fnc=entrypoint))
+    # Allow overriding the agent HTTP port with an environment variable
+    # Default to 0 (ephemeral port) to avoid "address already in use" errors
+    try:
+        port_env = os.environ.get("LIVEKIT_AGENT_PORT")
+        port = int(port_env) if port_env else 0
+    except Exception:
+        port = 0
+
+    try:
+        opts = agents.WorkerOptions(entrypoint_fnc=entrypoint, port=port)
+        agents.cli.run_app(opts)
+    except OSError as e:
+        # Common on Windows when port is already bound
+        logging.error(f"OS error starting agent: {e}")
+        if getattr(e, 'errno', None) in (10048,):
+            logging.error(
+                "Port is already in use. Either set a different port via the LIVEKIT_AGENT_PORT environment variable or stop the process using the port."
+            )
+        else:
+            logging.error("Unexpected OSError while starting agent:\n" + traceback.format_exc())
+        raise
+    except AssertionError as e:
+        # The library sometimes asserts during shutdown (seen when failing to bind)
+        logging.error("AssertionError during worker shutdown: %s", e)
+        logging.error(traceback.format_exc())
+        raise

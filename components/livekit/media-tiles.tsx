@@ -35,7 +35,7 @@ const animationProps = {
     damping: 75,
     mass: 1,
   },
-};
+} as const;
 
 const classNames = {
   // GRID

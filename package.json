@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
@@ -39,7 +39,7 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.18.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

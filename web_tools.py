@@ -1,7 +1,9 @@
 import webbrowser
 import logging
+from livekit.agents import function_tool
 
-def open_website(url: str) -> str:
+@function_tool()
+async def open_website(url: str) -> str:
     """
     Opens a given URL in the default web browser.
 
@@ -18,13 +20,8 @@ def open_website(url: str) -> str:
         if not url.startswith(('http://', 'https://')):
             url = 'https://' + url
 
-        # In a headless environment, webbrowser.open might not do anything visible,
-        # but it should still execute without error if the command exists.
-        # We will log that the function was called.
+        # Log the attempt (since webbrowser.open may not show a GUI in headless environments)
         logging.info(f"Attempting to open URL: {url}")
-
-        # The following line would open a browser on a desktop machine.
-        # In this sandboxed environment, it may not have a visible effect.
         webbrowser.open(url)
 
         return f"Success: Attempted to open URL '{url}'."
