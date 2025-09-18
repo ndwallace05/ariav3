@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Room, RoomEvent } from 'livekit-client';
 import { motion } from 'motion/react';
+import { useSession } from 'next-auth/react';
 import { RoomAudioRenderer, RoomContext, StartAudio } from '@livekit/components-react';
 import { toastAlert } from '@/components/alert-toast';
 import { SessionView } from '@/components/session-view';
@@ -21,8 +22,9 @@ interface AppProps {
 export function App({ appConfig }: AppProps) {
   const room = useMemo(() => new Room(), []);
   const [sessionStarted, setSessionStarted] = useState(false);
+  const { data: session } = useSession();
   const { refreshConnectionDetails, existingOrRefreshConnectionDetails } =
-    useConnectionDetails(appConfig);
+    useConnectionDetails(appConfig, session);
 
   useEffect(() => {
     const onDisconnected = () => {
