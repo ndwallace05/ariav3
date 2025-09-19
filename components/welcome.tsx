@@ -1,3 +1,4 @@
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -13,6 +14,8 @@ export const Welcome = ({
   onStartCall,
   ref,
 }: React.ComponentProps<'div'> & WelcomeProps) => {
+  const { data: session } = useSession();
+
   return (
     <section
       ref={ref}
@@ -39,9 +42,28 @@ export const Welcome = ({
       <p className="text-fg1 max-w-prose pt-1 leading-6 font-medium">
         Chat live with your voice AI agent
       </p>
-      <Button variant="primary" size="lg" onClick={onStartCall} className="mt-6 w-64 font-mono">
-        {startButtonText}
-      </Button>
+
+      {session ? (
+        <div className="flex flex-col items-center">
+          <p className="text-lg font-semibold">Welcome, {session.user?.name}</p>
+          <Button variant="primary" size="lg" onClick={onStartCall} className="mt-6 w-64 font-mono">
+            {startButtonText}
+          </Button>
+          <Button variant="secondary" size="sm" onClick={() => signOut()} className="mt-4">
+            Sign Out
+          </Button>
+        </div>
+      ) : (
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => signIn('google')}
+          className="mt-6 w-64 font-mono"
+        >
+          Sign in with Google
+        </Button>
+      )}
+
       <footer className="fixed bottom-5 left-0 z-20 flex w-full items-center justify-center">
         <p className="text-fg1 max-w-prose pt-1 text-xs leading-5 font-normal text-pretty md:text-sm">
           Need help getting set up? Check out the{' '}

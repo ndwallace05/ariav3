@@ -1,23 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 import { decodeJwt } from 'jose';
+import { Session } from 'next-auth';
 import { ConnectionDetails } from '@/app/api/connection-details/route';
 import { AppConfig } from '@/lib/types';
 
 const ONE_MINUTE_IN_MILLISECONDS = 60 * 1000;
 
-export default function useConnectionDetails(appConfig: AppConfig) {
-  // Generate room connection details, including:
-  //   - A random Room name
-  //   - A random Participant name
-  //   - An Access Token to permit the participant to join the room
-  //   - The URL of the LiveKit server to connect to
-  //
-  // In real-world application, you would likely allow the user to specify their
-  // own participant name, and possibly to choose from existing rooms to join.
-
+export default function useConnectionDetails(appConfig: AppConfig, session: Session | null) {
   const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | null>(null);
 
   const fetchConnectionDetails = useCallback(async () => {
+    if (!session) {
+      return;
+    }
+
     setConnectionDetails(null);
     const url = new URL(
       process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details',
@@ -48,11 +44,13 @@ export default function useConnectionDetails(appConfig: AppConfig) {
 
     setConnectionDetails(data);
     return data;
-  }, []);
+  }, [session]);
 
   useEffect(() => {
-    fetchConnectionDetails();
-  }, [fetchConnectionDetails]);
+    if (session) {
+      fetchConnectionDetails();
+    }
+  }, [fetchConnectionDetails, session]);
 
   const isConnectionDetailsExpired = useCallback(() => {
     const token = connectionDetails?.participantToken;

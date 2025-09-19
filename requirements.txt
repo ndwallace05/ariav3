@@ -16,3 +16,8 @@ flask[async]
 flask
 flask-cors
 uvicorn
+google-auth
+google-auth-oauthlib
+PyJWT
+Flask-SQLAlchemy
+psycopg2-binary

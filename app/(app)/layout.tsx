@@ -1,4 +1,5 @@
 import { headers } from 'next/headers';
+import NextAuthSessionProvider from '@/components/session-provider';
 import { getAppConfig } from '@/lib/utils';
 
 interface AppLayoutProps {
@@ -10,7 +11,7 @@ export default async function AppLayout({ children }: AppLayoutProps) {
   const { companyName, logo, logoDark } = await getAppConfig(hdrs);
 
   return (
-    <>
+    <NextAuthSessionProvider>
       <header className="fixed top-0 left-0 z-50 hidden w-full flex-row justify-between p-6 md:flex">
         <a
           target="_blank"
@@ -40,6 +41,6 @@ export default async function AppLayout({ children }: AppLayoutProps) {
         </span>
       </header>
       {children}
-    </>
+    </NextAuthSessionProvider>
   );
 }

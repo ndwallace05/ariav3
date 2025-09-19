@@ -140,13 +140,33 @@ pnpm install
 
 **b. Configure Environment Variables**
 
-Create a file named `.env.local` in the root of the project and add your LiveKit credentials. The frontend needs these to connect to the LiveKit API.
+Create a file named `.env.local` by copying the `.env.example` file. This file will contain all the necessary environment variables for the application.
 
-```env
-LIVEKIT_API_KEY="YOUR_LIVEKIT_API_KEY"
-LIVEKIT_API_SECRET="YOUR_LIVEKIT_API_SECRET"
-LIVEKIT_URL="https://your-livekit-server-url" # e.g., wss://my-project.livekit.cloud
+```bash
+cp .env.example .env.local
 ```
+
+You will need to fill in the following values in your `.env.local` file:
+
+- `LIVEKIT_API_KEY`: Your LiveKit API key.
+- `LIVEKIT_API_SECRET`: Your LiveKit API secret.
+- `LIVEKIT_URL`: The URL of your LiveKit server.
+- `DATABASE_URL`: The connection string for your PostgreSQL database.
+- `GOOGLE_CLIENT_ID`: Your Google OAuth client ID.
+- `GOOGLE_CLIENT_SECRET`: Your Google OAuth client secret.
+- `NEXTAUTH_URL`: The URL of your application (e.g., `http://localhost:3000`).
+- `NEXTAUTH_SECRET`: A secret key for `next-auth` session encryption. You can generate one with `openssl rand -base64 32`.
+
+**d. Database Setup**
+
+This application uses Prisma as an ORM to interact with a PostgreSQL database. To set up the database, run the following commands:
+
+```bash
+pnpm prisma db push
+pnpm prisma generate
+```
+
+This will sync your database schema with your database and generate the Prisma client.
 
 **c. Run the Frontend**
 
